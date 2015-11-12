@@ -5,6 +5,7 @@ THE LOG FILE IS THEN READ AND THE BLACK_START TIMES ARE CONVERTED TO TIME CODE A
 
 ASSUMPTIONS:
 This script assumes all MOV files are 23.98fps. I haven't put in provisions for other frame rates.
+This branch makes it so you only have to enter a user inputed time code once if all the MOVs in your folder have the same start time code.
 
 Requires TKinter module.
 
