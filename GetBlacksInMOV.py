@@ -83,6 +83,7 @@ def timecode(h, m, s, f):
 
 print "Choose the source directory for the MOV files"
 directory = tkFileDialog.askdirectory()
+AllMOVTCs = 'n'
 
 for root, dirs, files in os.walk(directory):
     for file in files:
@@ -96,15 +97,22 @@ for root, dirs, files in os.walk(directory):
             with open(logfile, 'r') as log_file:
                 (hh, mm, ss, ff, rate) = StartTC(log_file)
                 if hh==() and mm==() and ss==() and ff==():
-                    print "No Timecode in metadata.\n"
-                    userTC = raw_input("Enter the start timecode of the movie file excluding colons (hhmmssff)\n")
-                    print "You entered "+userTC+"\n"
-                    MOVTC = userTC[0:2]+":"+userTC[2:4]+":"+userTC[4:6]+":"+userTC[6:]
-                    print 'User Entered Start TimeCode is '+MOVTC
-                    hh=int(userTC[0:2])
-                    mm=int(userTC[2:4])
-                    ss=int(userTC[4:6])
-                    ff=int(userTC[6:])
+                    if AllMOVTCs == 'n':
+                        print "No Timecode in metadata.\n"
+                        userTC = raw_input("Enter the start timecode of the movie file excluding colons (hhmmssff)\n")
+                        print "You entered "+userTC+"\n"
+                        AllMOVTCs = raw_input("Will this be the start TC for all MOV files? [y/n]")
+                        MOVTC = userTC[0:2]+":"+userTC[2:4]+":"+userTC[4:6]+":"+userTC[6:]
+                        print 'User Entered Start TimeCode is '+MOVTC
+                        hh=int(userTC[0:2])
+                        mm=int(userTC[2:4])
+                        ss=int(userTC[4:6])
+                        ff=int(userTC[6:])
+                    else:
+                        hh=int(userTC[0:2])
+                        mm=int(userTC[2:4])
+                        ss=int(userTC[4:6])
+                        ff=int(userTC[6:])
                 else:
                     MOVTC = str(hh)+':'+str(mm)+':'+str(ss)+':'+str(ff)
                     print 'Start TimeCode is '+ MOVTC
