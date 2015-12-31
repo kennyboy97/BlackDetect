@@ -18,6 +18,7 @@ STEP 6: Python locates the frame rate of the MOV file based on the LOG. (again, 
 STEP 7: Python then locates all lines containing "black_start" and parses out the start time and saves it to an array.
 STEP 8: Python then does the calculations needed to convert the black start times from seconds to time code.
 STEP 9: Python then adds the hours, minutes, seconds, frames of the black start times to the MOV start time code.
+    NOTE: Original code did not work on files longer then an hour. I've added code to account for that now.
 STEP 10: Python creates a TXT document with the file name, MOV start TC, MOV frame rate, and a list of all start time
 codes for all blacks.
 """
@@ -132,7 +133,10 @@ for root, dirs, files in os.walk(directory):
                     if newss >= 60:
                         newmm = newmm+1
                         newss = newss-60
-                    if newmm >=60:
+                     if newmm >= 120:
+                        newhh = newhh+1
+                        newmm = newmm-120
+                    elif newmm >= 60:
                         newhh = newhh+1
                         newmm = newmm-60
                     (blackhh, blackmm, blackss, blackff) = timecode(newhh, newmm, newss, newff)
